@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Vtuber Model Manual</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&family=Open+Sans:wght@300&display=swap" rel="stylesheet"> 
+
+<nav id="navbar">
+  <header>
+    Vtuber Model Documentation
+  </header>
+  <a class="nav-link" href="#What_is_this?">
+    What is this?
+  </a>
+  <a class="nav-link" href="#Should_I_read_it?">
+    Should I read it?
+  </a>
+  <a class="nav-link" href="#How_does_a_vtuber_model_works?">
+    How does a vtuber model works?
+  </a>
+  <a class="nav-link" href="#Head_Movement">
+    Head Movement
+  </a>
+  <a class="nav-link" href="#Eye_Movement">
+    Eye Movement
+  </a>
+  <a class="nav-link" href="#Mouth_Movement">
+    Mouth Movement
+  </a>
+  <a class="nav-link" href="#Brows_Movement">
+    Brows Movement
+  </a>
+  <a class="nav-link" href="#Body_Movement">
+    Body Movement
+  </a>
+  <a class="nav-link" href="#Arms_Movement">
+    Arms Movement
+  </a>
+  <a class="nav-link" href="#Physics">
+    Physics
+  </a>
+</nav>
+<main id="main-doc">
+  <section id="What_is_this?" class="main-section">
+    <header>What is this?</section>  
+    <p>You may be wondering "I paid for a vtuber model rig not for an appliance" so why is there a manual alongside the files with funny names and extensions?</p>
+    <p>Well I noticed that some vtubers on twitch and youtube have amazing models, but, there is still something that seems off about them, not that they look bad, is just that they could look better. And its not because of bad rigging but because of poor configuration or lack of it.</p>
+    <p>You see, the most popular facetracking software for indie vtubers, vTubeStudio and prprLive (I wont talk about VUP since half of that program is in chinese and their UI is too complicated IMO), set your model configuration with some default values, and depending on your camera and the lightning of your room, tweaking these little numbers can do amazing differences on how your model looks while moving, and also can save you of some neck pain (looking at you angleZ parameter).</p>
+    <hr>
+  </section>
+  <section id="Should_I_read_it?" class="main-section">
+    <header>Should I read it?</section> 
+    <p>Well yes, but actually no. Your model already has a configuration for it to work on your face tracking software. So it's not necessary to change anything, you are free to slap your model into vTubeStudio, turn on OBS, start streaming, become famous and dominate the word! (or just have fun with it). </p> 
+    <p>It is the default configuration plus a couple of tweaks made by me just to be sure the extra parameters unique to your model aren't completely ignored (for example the breathing and ear movement).</p>
+    <p>But as I said before, not all cameras and room illumination are the same, so if you found the tracking is not working properly, here is a guide on how to improve how your vtuber self will look when streaming.</p>
+    <p>Also, everyone has there own preferences about how a vtuber should look like. some think that their movemnt and physics should look realistic, others prefer fluffiness and bounciness. I hope that this guide will help you on setting your model as the best it can be!</p>
+    <code class="comment"><div>Warning:</div> I don't recommend you to edit the .json files manually from a text editor, since there is risk of making syntax erros that will make the file unreadable for the tracking app. The following setup can be done inside the face tracking app, the only exception being prprLive without animoji DLC (but if your are not buying the DLC, you may as well just use vTubeStudio)
+    </code>
+    <hr>
+  </section>
+  <section id="How_does_a_vtuber_model_works?" class="main-section">
+    <header>How does a vtuber model works?</section>  
+    <p>After all the technical stuff about textures, masks, warp and rotation deformers we end with the following files:</p>
+    <ul>
+      <li>expressions <small>folder</small></li>
+      <li>animations <small>folder</small></li>
+      <li>icon.png</li>
+      <li><i>your_model</i>.8192 folder</li>
+      <li><i>your_model</i>.cdi.json</li>
+      <li><i>your_model</i>.moc3</li>
+      <li><i>your_model</i>.model3.json</li>
+      <li><i>your_model</i>.physics3.json</li>
+      <li><i>your_model</i>.prprl2d.json <small>only for prprLive</small></li>
+      <li>ARKitFaceTrackerSettingBeta.json <small>only for prprLive</small></li>
+      <li><i>your_model</i>.vtube.json <small>only for vTubeStudio</small></li>
+    </ul>
+    <p>When you load your model in your tracking app, it reads all these files to know how to build your model and what it has to do when you start moving like crazy in front of your camera. Thanks to some AI stuff, your app can detect diferent movement you do with your face likes these ones:</p>
+    <ul>
+      <li>Looking to the right, left, up and down</li>
+      <li>Tilting your head</li>
+      <li>Open and closing your eyes</li>
+      <li>Open and closing your mouth</li>
+      <li>Smiling or sad mouth</li>
+      <li>Moving your eyebrows up and down</li>
+      <li>How close you are to your camera</li>
+      <li>... and possibly even more in the future</li>
+    </ul>
+    <p>Note: inside the app these are called parameters too, a little confusing I know. Just keep in mind that we link the app parameters to control our model's parameters. Also you can configure the app to detect other things like mouse movement or mic input.</p>
+    <p>We will be looking at the model configuration menu of your tracking app, where you can choose which kind of movement triggers each of your model's parameters</p>
+    <p>BTW what are parameters? These are the movement that your rig artist incorporated in your model, so if your character can move their face to the left and to the right, it's is most likely that it has a "Angle X" parameter, just as if it can blink then it has the "Eye Open" parameter for sure, and so on. Even the crazy fluffy movement of your character's hair and tail (if it has one) is determined by their respective parameters.</p>
+    <hr>
+  </section>
+  <section id="Head_Movement" class="main-section">
+    <header>Head Movement</header>
+    <p>When you start rigging a model, live2D cubism gives you a preset of parameters and the face's are the first ones, so why not start here.</p>
+    <p>Here is a list of the parameters that we will be looking at, and which detected movements are they linked to: </p>
+    <div class="paramImage">
+      <code>
+  {
+    "Your model parameter name": "ParamAngleX",
+    "vTubeStudio parameter name": "FaceAngleX",
+    "PrprLive parameter name": "yaw",
+    "What is detected": "Your face looking at the left or right"
+  }
+      </code>
+      <img class="example-img" src="./images/AngleX.gif"/>
+    </div>
+    <div class="paramImage">
+      <code>
+{
+  "Your model parameter name": "ParamAngleY",
+  "vTubeStudio parameter name": "FaceAngleY",
+  "PrprLive parameter name": "pitch",
+  "What is detected": "Your face looking up or down"
+}
+      </code>
+      <img class="example-img" src="./images/AngleY.gif"/>
+    </div>
+    <div class="paramImage">
+      <code>
+{
+  "Your model parameter name": "ParamAngleZ",
+  "vTubeStudio parameter name": "FaceAngleZ",
+  "PrprLive parameter name": "roll",
+  "What is detected": "Your face leaning at the right or left"
+}
+      </code>
+      <img class="example-img" src="./images/AngleZ.gif"/>
+    </div>
+    <p>I belive any sane person would link the parameters like these, unless you have a really unique model that must look at the right when you open your mouth and look to the left when you close it.</p>
+    <p>Anyway, I usually don't make expressions that uses these parameters so lets continue with the next part, ok?</p>
+    <h3>Expressions</h3>
+    <ul>
+      <li>None</li>
+    </ul>
+    <hr>
+  </section>
+  <section id="Eye_Movement" class="main-section">
+    <header>Eye Movement</header>
+    <p>We'll be looking at how your blinking is detected and how the direction your eyes are looking at can also detected by these apps. Their parameters are similar to the previous section (unless you use Android + vTubeStudio in which case the closest thing to do is just use the face parameters once more)</p>
+    <div class="paramImage">
+      <code>
+{
+  "Your model parameter name": "ParamEyeROpen",
+  "vTubeStudio parameter name": "EyeOpenRight",
+  "PrprLive parameter name": "eyeR",
+  "What is detected": "Is your right eye open?"
+}
+      </code>
+      <img class="example-img" src="./images/EyeROpen.gif"/>
+    </div>
+    <div class="paramImage">
+      <code>
+{
+  "Your model parameter name": "ParamEyeLOpen",
+  "vTubeStudio parameter name": "EyeOpenLeft",
+  "PrprLive parameter name": "eyeL",
+  "What is detected": "Is your left eye open?"
+}
+      </code>
+      <img class="example-img" src="./images/EyeLOpen.gif"/>
+    </div>
+    <div class="paramImage">
+      <code>
+{
+  "Your model parameter name": "ParamEyeBallX",
+  "vTubeStudio parameter name": ["EyeRightX", "EyeLeftX"],
+  "PrprLive parameter name": "eyeballX",
+  "What is detected": "Are your eyes looking to the left or to the right",
+  "Are you moving your eyes in different directions?": "You must use vTubeStudio if you want your model to share your talent"
+}
+      </code>
+      <img class="example-img" src="./images/EyeBallX.gif"/>
+    </div>
+    <div class="paramImage">
+      <code>
+{
+  "Your model parameter name": "ParamEyeBallY",
+  "vTubeStudio parameter name": ["EyeRightY", "EyeLeftY"],
+  "PrprLive parameter name": "eyeballY",
+  "What is detected": "Are your eyes looking up or down",
+  "Are you moving your eyes in different directions?": "Really? How do you do that?"
+}
+      </code>
+      <img class="example-img" src="./images/EyeBallY.gif"/>
+    </div>
+    <p>So the eye-tracking works similar to the face-tracking, not much more to say. The blinking is pretty straightforward, but... I belive that eyes can be really expressive, and we'll need another couple of parameters and some expressions to reflect this in your model.</p>
+    <div class="paramImage">
+    <code class="comment">
+      <div>"Your model parameter name": "ParamEyeForm"</div>
+"What it does": "This let me set how much closed the eyes must be, doesnt matter what the previous parameters say"
+    </code>
+    </div>
+    <div class="paramImage">
+    <code class="comment">
+      <div>"Your model parameter name": "ParamEyeLSmile" and "ParamEyeRSmile"</div>
+"What it does": "This sets the shape the eyes will make when closed. This way you can decide if your model will make the uwu or n.n face"
+    </code>
+    </div>
+    <h3>Expressions</h3>
+    <ul>
+      <div class="expImage">
+        <li>Half Closed Eyes</li>
+        <img class="example-img" src="./images/HalfClosedEyes.gif"/>
+      </div>
+      <div class="expImage">
+        <li>Closed Eyes</li>
+        <img class="example-img" src="./images/ClosedEyes.gif"/>
+      </div>
+      <div class="expImage">
+        <li>Happy Eyes</li>
+        <img class="example-img" src="./images/HappyEyes.gif"/>
+      </div>
+    </ul>
+    <hr>
+  </section>
+  <section id="Mouth_Movement" class="main-section">
+    <header>Mouth Movement</header>
+    <p>Ut mattis velit et massa tempor, quis pellentesque libero pellentesque. Nunc commodo placerat erat vitae feugiat. Nullam egestas orci ut rutrum posuere. Nam vitae ante at nisi blandit congue sed tincidunt neque. Pellentesque ac odio ut diam scelerisque aliquet. Duis in interdum sem. Fusce vehicula molestie augue, ac finibus elit varius eu. Sed malesuada sapien et lacus commodo consectetur. Vestibulum consequat iaculis sem, ac luctus nunc congue et. Nullam ullamcorper erat ac congue pellentesque. Duis ultricies, magna eget ultrices consectetur, orci felis accumsan massa, id viverra mi arcu vitae purus. Suspendisse eget purus lectus. Aenean eu semper augue. </p>
+    <code>
+      "Parameters": [
+        {
+          "Id": "ParamMouthForm",
+          "GroupId": "",
+          "Name": "Mouth Form"
+        },
+        {
+          "Id": "ParamMouthExpression",
+          "GroupId": "",
+          "Name": "Mouth Expression"
+        },
+        {
+          "Id": "ParamMouthOpen",
+          "GroupId": "",
+          "Name": "Mouth Open"
+        }
+      ]
+    </code>
+    <p>Ut dictum est eget eros finibus, et hendrerit eros semper. Praesent eleifend eget nulla at venenatis. Nam diam arcu, tempor nec convallis a, viverra quis eros. Mauris elementum vulputate erat sit amet tempus. Morbi sit amet ligula ut odio iaculis rhoncus. Suspendisse et dui eu orci luctus fringilla sed ac dolor. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque sit amet magna eu enim convallis imperdiet. </p>
+    <ul>
+      <li>Neutral</li>
+      <li>Angry</li>
+      <li>Happy</li>
+      <li>Sad</li>
+      <li>Bored</li>
+      <li>Smug</li>
+      <li>Closed Eyes</li>
+      <li>Closed Happy Eyes</li>
+    </ul>
+    <hr>
+  </section>
+  <section id="Brows_Movement" class="main-section">
+    <header>Brows Movement</header>
+    <p>Etiam cursus venenatis erat, a vestibulum ante laoreet sit amet. Sed tempor, mauris porttitor hendrerit dignissim, lacus felis hendrerit est, ut rutrum risus elit vitae lorem. Phasellus non scelerisque nunc, eget commodo ante. Morbi ut sem at nunc tempor fringilla. Quisque vestibulum vitae justo vel eleifend. Sed fringilla ante vel erat fringilla viverra. Donec cursus nulla ac consequat eleifend. Praesent id sollicitudin massa, ut facilisis magna. In hac habitasse platea dictumst. Sed aliquet, velit at pellentesque malesuada, sem purus congue urna, vitae auctor augue leo id sapien. Praesent feugiat ut nunc ac mollis. </p>
+    <code>
+      "Parameters": [
+        {
+          "Id": "ParamAngleX",
+          "GroupId": "",
+          "Name": "Angle X"
+        },
+        {
+          "Id": "ParamAngleY",
+          "GroupId": "",
+          "Name": "Angle Y"
+        },
+        {
+          "Id": "ParamAngleZ",
+          "GroupId": "",
+          "Name": "Angle Z"
+        }
+      ]
+    </code>
+    <p>Aenean tellus metus, aliquam quis erat non, imperdiet porttitor odio. Proin consectetur vehicula mollis. Pellentesque at justo ac odio consequat auctor eu non est. Donec a lacinia odio. Suspendisse quis fringilla risus. Morbi lacus augue, pharetra et justo condimentum, varius efficitur orci. Mauris magna purus, tempus ac placerat sit amet, pulvinar in quam. Suspendisse sodales vitae felis vitae tristique. Proin vehicula lobortis urna vel molestie. Maecenas congue faucibus vehicula. Donec a tempor velit. Phasellus quis elit id nibh efficitur consequat id sed lorem. Nulla lobortis magna eget lacus laoreet posuere. Curabitur sagittis massa eu lorem feugiat dictum non sit amet magna. </p>
+    <ul>
+      <li>Neutral</li>
+      <li>Angry</li>
+      <li>Happy</li>
+      <li>Sad</li>
+      <li>Bored</li>
+      <li>Smug</li>
+      <li>Closed Eyes</li>
+      <li>Closed Happy Eyes</li>
+    </ul>
+    <hr>
+  </section>
+  <section id="Body_Movement" class="main-section">
+    <header>Body Movement</header>
+    <p>Integer lacinia, erat eu vestibulum euismod, est dui sodales leo, non scelerisque orci metus et orci. Phasellus posuere nisi eget nunc tempus, at euismod augue dapibus. Donec iaculis sit amet sem id dapibus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus suscipit dapibus finibus. Vivamus eget auctor justo. Morbi nec elit faucibus, cursus mi tincidunt, viverra metus. Phasellus rhoncus pretium augue vel maximus. Aliquam id pellentesque arcu. Mauris fringilla in est a bibendum. Mauris pretium, augue eget dictum ullamcorper, lacus urna malesuada lorem, non interdum tellus purus at erat. </p>
+    <code>
+      "Parameters": [
+        {
+          "Id": "ParamBodyX",
+          "GroupId": "",
+          "Name": "Body X"
+        },
+        {
+          "Id": "ParamBodyY",
+          "GroupId": "",
+          "Name": "Body Y"
+        },
+        {
+          "Id": "ParamBodyZ",
+          "GroupId": "",
+          "Name": "Body Z"
+        },
+        {
+          "Id": "ParamBodyL",
+          "GroupId": "",
+          "Name": "Body L"
+        }
+      ]
+    </code>
+    <p>Phasellus accumsan erat quis mauris ornare bibendum. Donec condimentum elementum turpis ac vestibulum. Sed maximus lectus at felis tempor, sit amet sodales nibh tempor. Phasellus at posuere nisl. Integer tincidunt, urna nec molestie interdum, eros mi auctor libero, quis efficitur neque nunc at justo. Curabitur vitae suscipit quam, a imperdiet tortor. Fusce porta sodales dictum. Fusce consequat felis sit amet eros ullamcorper, in ornare turpis malesuada. Pellentesque eget condimentum odio, at eleifend lectus. Sed placerat nisl varius fermentum fermentum. </p>
+    <ul>
+      <li>Neutral</li>
+      <li>Angry</li>
+      <li>Happy</li>
+      <li>Sad</li>
+      <li>Bored</li>
+      <li>Smug</li>
+      <li>Closed Eyes</li>
+      <li>Closed Happy Eyes</li>
+    </ul>
+    <hr>
+  </section>
+  <section id="Arms_Movement" class="main-section">
+    <header>Arms Movement</header>
+    <p>Nulla mollis velit ipsum, in vehicula tellus facilisis et. Curabitur dignissim et erat vel vehicula. Aliquam porta massa non convallis commodo. Praesent in lectus augue. Ut lorem dui, gravida et urna et, tincidunt eleifend magna. Praesent mattis arcu ante, ut luctus odio lobortis sed. Donec feugiat est mi. Morbi id dui tincidunt, hendrerit neque sed, consectetur lacus. Nulla facilisi. </p>
+    <code>
+      "Parameters": [
+        {
+          "Id": "ParamRArm",
+          "GroupId": "",
+          "Name": "R Arm"
+        },
+        {
+          "Id": "ParamLArm",
+          "GroupId": "",
+          "Name": "L Arm"
+        }
+      ]
+    </code>
+    <p>Fusce vel nibh a tellus euismod commodo. Nulla consectetur eleifend ipsum, vitae posuere massa congue sed. Aliquam erat volutpat. Quisque dictum felis sit amet sem vestibulum vestibulum. Duis efficitur nunc nec justo semper, ac placerat ipsum ornare. Morbi a ultrices augue. Vestibulum non nisi nec lorem molestie elementum quis non ex. Sed ullamcorper cursus pellentesque. Praesent eu malesuada metus, dapibus efficitur massa. Fusce laoreet lectus vel turpis malesuada consequat. Donec quis congue libero. Phasellus et interdum erat, sed suscipit tortor. Vestibulum aliquet nibh quam, vitae vehicula arcu luctus ultricies. </p>
+    <ul>
+      <li>Neutral</li>
+      <li>Angry</li>
+      <li>Happy</li>
+      <li>Sad</li>
+      <li>Bored</li>
+      <li>Smug</li>
+      <li>Closed Eyes</li>
+      <li>Closed Happy Eyes</li>
+    </ul>
+    <hr>
+  </section>
+  <section id="Physics" class="main-section">
+    <header>Physics</header>
+    <p>Fusce vel nibh a tellus euismod commodo. Nulla consectetur eleifend ipsum, vitae posuere massa congue sed. Aliquam erat volutpat. Quisque dictum felis sit amet sem vestibulum vestibulum. Duis efficitur nunc nec justo semper, ac placerat ipsum ornare. Morbi a ultrices augue. Vestibulum non nisi nec lorem molestie elementum quis non ex. Sed ullamcorper cursus pellentesque. Praesent eu malesuada metus, dapibus efficitur massa. Fusce laoreet lectus vel turpis malesuada consequat. Donec quis congue libero. Phasellus et interdum erat, sed suscipit tortor. Vestibulum aliquet nibh quam, vitae vehicula arcu luctus ultricies. </p>
+    <code>
+      "Parameters": [
+        {
+          "Id": "ParamRArm",
+          "GroupId": "",
+          "Name": "R Arm"
+        },
+        {
+          "Id": "ParamLArm",
+          "GroupId": "",
+          "Name": "L Arm"
+        }
+      ]
+    </code>
+    <p>Nulla mollis velit ipsum, in vehicula tellus facilisis et. Curabitur dignissim et erat vel vehicula. Aliquam porta massa non convallis commodo. Praesent in lectus augue. Ut lorem dui, gravida et urna et, tincidunt eleifend magna. Praesent mattis arcu ante, ut luctus odio lobortis sed. Donec feugiat est mi. Morbi id dui tincidunt, hendrerit neque sed, consectetur lacus. Nulla facilisi. </p>
+    <ul>
+      <li>Neutral</li>
+      <li>Angry</li>
+      <li>Happy</li>
+      <li>Sad</li>
+      <li>Bored</li>
+      <li>Smug</li>
+      <li>Closed Eyes</li>
+      <li>Closed Happy Eyes</li>
+    </ul>
+    <hr>
+  </section>
+  <div id="footer">
+    <p>Made with HTML and CSS by Oscar Morales - 2021</p>
+  </div>
+</main>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>

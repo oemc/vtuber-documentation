@@ -1,0 +1,157 @@
+#navbar{
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: #EEEEEE;
+  border-style: none solid none none;
+  border-color: #AAAAAA;
+  border-width: 2px;
+  border-radius: 0px;
+}
+
+#main-doc{
+  position: absolute;
+  width: 60%;
+  margin-left: 35%;
+  margin-right: 5%;
+}
+
+#footer p{
+  text-align: center;
+}
+
+.nav-link{
+  flex: 0 1 auto;
+  padding: 10px 0px 10px 20px;
+  border-style: none none solid none;
+  border-color: #AAAAAA;
+  border-width: 2px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+}
+
+.paramImage{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.comment{
+  display: block;
+  text-align: left;
+  white-space: normal;
+  word-break: break-word;
+  word-wrap: normal;
+  color: #FFFFFF;
+  background-color: #333333;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.example-img{
+  width: auto;
+  max-height: 200px;
+}
+
+.paramImage{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 10px 0px;
+}
+
+.expImage{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0px;
+}
+
+code{
+  overflow: auto;
+  display: block;
+  text-align: left;
+  white-space: pre;
+  word-break: normal;
+  word-wrap: normal;
+  color: #FFFFFF;
+  background-color: #333333;
+  padding: 10px;
+  border-radius: 20px;
+  flex: 1 1; 
+}
+
+nav header{
+  text-align: center;  
+}
+
+header{
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 30px;
+}
+
+h3{
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+
+p {
+  font-family: 'Open Sans', sans-serif;
+  text-align: justify
+}
+
+ul {
+  font-family: 'Open Sans', sans-serif;
+}
+
+a:link {
+  color: #500000;
+}
+
+a:visited {
+  color: #660000;
+}
+
+a:hover {
+  color: #330000;
+}
+
+hr{
+  margin-bottom: 50px;
+}
+
+@media (max-width: 850px), (max-height: 500px){
+  #navbar{
+    overflow: hidden;
+    position: static;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 50px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-color: #EEEEEE;
+    border-style: solid solid none;
+    border-color: #AAAAAA;
+    border-width: 2px;
+    border-radius: 5px;
+  }
+  #main-doc{
+    position: static;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}
