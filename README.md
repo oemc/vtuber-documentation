@@ -1,4 +1,4 @@
-# Technical Documentation Page FCC
+# Vtuber Model Manual - Technical Documentation Page FCC
 
 A Pen created on CodePen.io. Original URL: [https://codepen.io/oemc/pen/YzNdoab](https://codepen.io/oemc/pen/YzNdoab).
 
